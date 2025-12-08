@@ -1,0 +1,8 @@
+org.apache.storm.MessagingTest
+org.apache.storm.TestRebalance
+org.apache.storm.TestingTest
+org.apache.storm.TickTupleTest
+org.apache.storm.integration.TestingTest
+org.apache.storm.integration.TopologyIntegrationTest
+org.apache.storm.messaging.NettyIntegrationTest
+org.apache.storm.nimbus.LocalNimbusTest
