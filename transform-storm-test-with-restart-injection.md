@@ -925,20 +925,81 @@ Ensure the following dependencies are included in the test's module to use the R
 
 **IMPORTANT**: Storm tests require Java 17 and special Maven options to build and compile.
 
-Before building or running Storm tests with restart injection:
+Before building or running Storm tests with restart injection, you need to:
+
+### 1. Build the Restart Storm Adapter (Standalone)
+
+The restart-storm-adapter is maintained as a standalone project and must be built separately first:
 
 ```bash
+# Navigate to the restart-storm-adapter directory
+cd restart-storm-adapter/
+
 # Ensure Java 17 is being used
-java -version  # Should show Java 17
-
-# If using SDKMAN or similar:
-# sdk use java 17.x.x
-
-# Set required MAVEN_OPTS to allow reflection access
+export JAVA_HOME=/usr/lib/jvm/java-17-openjdk-amd64  # Adjust path for your system
 export MAVEN_OPTS="--add-opens java.base/java.lang=ALL-UNNAMED"
 
-# Then build the tests
-mvn clean test
+# Build and install the adapter to local Maven repository
+mvn clean install -DskipTests
+
+# Return to Storm root directory
+cd ..
 ```
 
-The `--add-opens` flag is required for Storm's internal reflection operations to work properly with Java 17's module system.
+### 2. Build Storm Modules with Restart Testing Support
+
+After the restart-storm-adapter is installed to your local Maven repository, you can build the Storm modules that contain the tests:
+
+```bash
+# Set required environment variables
+export JAVA_HOME=/usr/lib/jvm/java-17-openjdk-amd64  # Adjust path for your system
+export MAVEN_OPTS="--add-opens java.base/java.lang=ALL-UNNAMED"
+
+# Build the storm-server module (contains MessagingTest, TestRebalance, TestingTest, TickTupleTest, LocalNimbusTest)
+cd storm-server/
+mvn clean compile
+
+# Build the storm-core module (contains integration tests)
+cd ../storm-core/
+mvn clean compile
+
+# Or build all Storm modules from the root
+cd ..
+mvn clean compile -pl storm-core,storm-server
+```
+
+### 3. Run Tests with Restart Injection
+
+```bash
+# Run a specific test with restart injection
+mvn test -Dtest=TestClassName_RestartInjected
+
+# Run all restart-injected tests
+mvn test -Dtest="*_RestartInjected"
+```
+
+### Important Notes
+
+- **Java 17 Required**: Storm 2.8.3 is compiled with Java 17 (class version 61.0)
+- **MAVEN_OPTS**: The `--add-opens java.base/java.lang=ALL-UNNAMED` flag is required for Storm's internal reflection operations to work properly with Java 17's module system
+- **Standalone Adapter**: The restart-storm-adapter is NOT a module of the Storm project. It must be built separately and installed to the local Maven repository before building Storm modules
+- **Dependencies**: The following modules have restart testing dependencies added:
+  - `storm-server`: Contains tests for MessagingTest, TestRebalance, TestingTest, TickTupleTest, LocalNimbusTest
+  - `storm-core`: Contains tests for TopologyIntegrationTest, NettyIntegrationTest, and integration TestingTest
+
+### Verifying Java Version
+
+```bash
+# Check current Java version
+java -version  # Should show Java 17 (e.g., openjdk version "17.0.x")
+
+# If using multiple Java versions, set JAVA_HOME explicitly
+# For Ubuntu/Debian:
+export JAVA_HOME=/usr/lib/jvm/java-17-openjdk-amd64
+
+# For macOS with Homebrew:
+export JAVA_HOME=/usr/local/opt/openjdk@17
+
+# For SDKMAN:
+sdk use java 17.x.x
+```
