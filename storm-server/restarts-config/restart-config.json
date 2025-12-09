@@ -1,0 +1,173 @@
+{
+  "tests": [
+    {
+      "testClass": "org.apache.storm.MessagingTest_RestartInjected",
+      "testMethod": "testLocalTransport",
+      "restartPoints": [
+        {
+          "position": "before_topology_complete",
+          "targets": ["supervisor"],
+          "modes": ["GRACEFUL", "CRASH"]
+        },
+        {
+          "position": "after_topology_complete",
+          "targets": ["worker", "supervisor"],
+          "modes": ["GRACEFUL", "CRASH", "DELAYED_CRASH"]
+        }
+      ]
+    },
+    {
+      "testClass": "org.apache.storm.MessagingTest_RestartInjected",
+      "testMethod": "testRemoteTransportWithManyTasksInReceivingExecutor",
+      "restartPoints": [
+        {
+          "position": "before_topology_complete",
+          "targets": ["supervisor"],
+          "modes": ["GRACEFUL", "CRASH"]
+        },
+        {
+          "position": "after_topology_complete",
+          "targets": ["worker", "supervisor"],
+          "modes": ["GRACEFUL", "CRASH", "DELAYED_CRASH"]
+        }
+      ]
+    },
+    {
+      "testClass": "org.apache.storm.TestRebalance_RestartInjected",
+      "testMethod": "testRebalanceTopologyResourcesAndConfigs",
+      "restartPoints": [
+        {
+          "position": "after_topology_submit",
+          "targets": ["supervisor"],
+          "modes": ["GRACEFUL", "CRASH"]
+        },
+        {
+          "position": "after_topology_scheduled",
+          "targets": ["worker"],
+          "modes": ["GRACEFUL", "CRASH"]
+        },
+        {
+          "position": "before_rebalance",
+          "targets": ["supervisor"],
+          "modes": ["GRACEFUL", "CRASH"]
+        },
+        {
+          "position": "after_rebalance",
+          "targets": ["worker", "supervisor"],
+          "modes": ["GRACEFUL", "CRASH", "DELAYED_CRASH"]
+        },
+        {
+          "position": "after_rebalance_scheduled",
+          "targets": ["supervisor"],
+          "modes": ["GRACEFUL", "CRASH"]
+        }
+      ]
+    },
+    {
+      "testClass": "org.apache.storm.TestingTest_RestartInjected",
+      "testMethod": "testCompleteTopologyNettySimulated",
+      "restartPoints": [
+        {
+          "position": "before_topology_complete",
+          "targets": ["supervisor"],
+          "modes": ["GRACEFUL", "CRASH"]
+        },
+        {
+          "position": "after_topology_complete",
+          "targets": ["worker", "supervisor"],
+          "modes": ["GRACEFUL", "CRASH", "DELAYED_CRASH"]
+        }
+      ]
+    },
+    {
+      "testClass": "org.apache.storm.TestingTest_RestartInjected",
+      "testMethod": "testCompleteTopologyNetty",
+      "restartPoints": [
+        {
+          "position": "before_topology_complete",
+          "targets": ["supervisor"],
+          "modes": ["GRACEFUL", "CRASH"]
+        },
+        {
+          "position": "after_topology_complete",
+          "targets": ["worker", "supervisor"],
+          "modes": ["GRACEFUL", "CRASH", "DELAYED_CRASH"]
+        }
+      ]
+    },
+    {
+      "testClass": "org.apache.storm.TestingTest_RestartInjected",
+      "testMethod": "testCompleteTopologyLocalSimulated",
+      "restartPoints": [
+        {
+          "position": "before_topology_complete",
+          "targets": ["supervisor"],
+          "modes": ["GRACEFUL", "CRASH"]
+        },
+        {
+          "position": "after_topology_complete",
+          "targets": ["worker", "supervisor"],
+          "modes": ["GRACEFUL", "CRASH", "DELAYED_CRASH"]
+        }
+      ]
+    },
+    {
+      "testClass": "org.apache.storm.TestingTest_RestartInjected",
+      "testMethod": "testCompleteTopologyLocal",
+      "restartPoints": [
+        {
+          "position": "before_topology_complete",
+          "targets": ["supervisor"],
+          "modes": ["GRACEFUL", "CRASH"]
+        },
+        {
+          "position": "after_topology_complete",
+          "targets": ["worker", "supervisor"],
+          "modes": ["GRACEFUL", "CRASH", "DELAYED_CRASH"]
+        }
+      ]
+    },
+    {
+      "testClass": "org.apache.storm.TickTupleTest_RestartInjected",
+      "testMethod": "testTickTupleWorksWithSystemBolt",
+      "restartPoints": [
+        {
+          "position": "after_topology_submit",
+          "targets": ["supervisor"],
+          "modes": ["GRACEFUL", "CRASH"]
+        },
+        {
+          "position": "after_first_tuple_ack",
+          "targets": ["worker"],
+          "modes": ["GRACEFUL", "CRASH", "DELAYED_CRASH"]
+        },
+        {
+          "position": "after_first_time_advance",
+          "targets": ["worker"],
+          "modes": ["GRACEFUL", "CRASH"]
+        },
+        {
+          "position": "after_second_time_advance",
+          "targets": ["supervisor"],
+          "modes": ["GRACEFUL", "CRASH"]
+        }
+      ]
+    },
+    {
+      "testClass": "org.apache.storm.nimbus.LocalNimbusTest_RestartInjected",
+      "testMethod": "testSubmitTopologyToLocalNimbus",
+      "restartPoints": [
+        {
+          "position": "after_second_topology_submit",
+          "targets": ["supervisor"],
+          "modes": ["GRACEFUL", "CRASH"]
+        },
+        {
+          "position": "after_all_topology_submit",
+          "targets": ["worker"],
+          "modes": ["GRACEFUL", "CRASH", "DELAYED_CRASH"]
+        }
+      ]
+    }
+  ]
+}

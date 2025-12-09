@@ -1,0 +1,105 @@
+{
+  "tests": [
+    {
+      "testClass": "org.apache.storm.integration.TestingTest_RestartInjected",
+      "testMethod": "testWithTrackedCluster",
+      "restartPoints": [
+        {
+          "position": "after_topology_submit",
+          "targets": ["supervisor"],
+          "modes": ["GRACEFUL", "CRASH"]
+        },
+        {
+          "position": "after_time_advance",
+          "targets": ["worker"],
+          "modes": ["GRACEFUL", "CRASH"]
+        }
+      ]
+    },
+    {
+      "testClass": "org.apache.storm.integration.TestingTest_RestartInjected",
+      "testMethod": "testAdvanceClusterTime",
+      "restartPoints": [
+        {
+          "position": "after_topology_submit",
+          "targets": ["supervisor"],
+          "modes": ["GRACEFUL", "CRASH"]
+        },
+        {
+          "position": "after_tuple_feed",
+          "targets": ["worker"],
+          "modes": ["GRACEFUL", "CRASH", "DELAYED_CRASH"]
+        },
+        {
+          "position": "after_timeout",
+          "targets": ["worker"],
+          "modes": ["GRACEFUL", "CRASH"]
+        }
+      ]
+    },
+    {
+      "testClass": "org.apache.storm.integration.TestingTest_RestartInjected",
+      "testMethod": "testDisableTupleTimeout",
+      "restartPoints": [
+        {
+          "position": "after_topology_submit",
+          "targets": ["supervisor"],
+          "modes": ["GRACEFUL", "CRASH"]
+        },
+        {
+          "position": "after_tuple_feed",
+          "targets": ["worker"],
+          "modes": ["GRACEFUL", "CRASH", "DELAYED_CRASH"]
+        }
+      ]
+    },
+    {
+      "testClass": "org.apache.storm.integration.TopologyIntegrationTest_RestartInjected",
+      "testMethod": "testBasicTopology",
+      "restartPoints": [
+        {
+          "position": "before_topology_complete",
+          "targets": ["supervisor"],
+          "modes": ["GRACEFUL", "CRASH"]
+        },
+        {
+          "position": "after_topology_complete",
+          "targets": ["worker", "supervisor"],
+          "modes": ["GRACEFUL", "CRASH", "DELAYED_CRASH"]
+        }
+      ]
+    },
+    {
+      "testClass": "org.apache.storm.integration.TopologyIntegrationTest_RestartInjected",
+      "testMethod": "testMultiTasksPerCluster",
+      "restartPoints": [
+        {
+          "position": "before_topology_complete",
+          "targets": ["supervisor"],
+          "modes": ["GRACEFUL", "CRASH"]
+        },
+        {
+          "position": "after_topology_complete",
+          "targets": ["worker", "supervisor"],
+          "modes": ["GRACEFUL", "CRASH", "DELAYED_CRASH"]
+        }
+      ]
+    },
+    {
+      "testClass": "org.apache.storm.messaging.NettyIntegrationTest_RestartInjected",
+      "testMethod": "testIntegration",
+      "restartPoints": [
+        {
+          "position": "before_topology_complete",
+          "targets": ["supervisor"],
+          "modes": ["GRACEFUL", "CRASH"]
+        },
+        {
+          "position": "after_topology_complete",
+          "targets": ["worker", "supervisor"],
+          "modes": ["GRACEFUL", "CRASH", "DELAYED_CRASH"]
+        }
+      ]
+    }
+  ]
+}
