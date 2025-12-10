@@ -243,6 +243,11 @@
                     </execution>
                 </executions>
             </plugin>
+            <plugin>
+                <groupId>org.restarttest</groupId>
+                <artifactId>restart-maven-plugin</artifactId>
+                <version>1.0.0-SNAPSHOT</version>
+            </plugin>
         </plugins>
     </build>
 </project>
