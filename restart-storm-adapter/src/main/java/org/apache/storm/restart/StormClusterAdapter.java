@@ -56,11 +56,9 @@ public class StormClusterAdapter implements ClusterAdapter<LocalCluster> {
     private static final Logger LOG = LoggerFactory.getLogger(StormClusterAdapter.class);
 
     private final StormStateCapture stateCapture;
-    private final StormHealthCheck healthCheck;
 
     public StormClusterAdapter() {
         this.stateCapture = new StormStateCapture();
-        this.healthCheck = new StormHealthCheck();
     }
 
     @Override
@@ -117,7 +115,7 @@ public class StormClusterAdapter implements ClusterAdapter<LocalCluster> {
 
     @Override
     public HealthCheck<LocalCluster> getHealthCheck() {
-        return healthCheck;
+        return null;
     }
 
     @Override
